@@ -25,9 +25,7 @@
             </div>
         </div>
     </nav>
-
-    <!--Modal do botao de login-->
-    <div class="modal fade" id="loginModal" tabindex="-1">
+  <div class="modal fade" id="loginModal" tabindex="-1">
   <div class="modal-dialog">
     <div class="modal-content">
 
@@ -59,6 +57,147 @@
         <span>Não tem conta?</span>
         <button class="btn btn-success">Registrar</button>
       </div>
+
+    </div>
+  </div>
+</div>
+
+  <!--Modal do Login -->
+  <div class="modal fade" id="loginModal" tabindex="-1">
+    <div class="modal-dialog">
+      <div class="modal-content">
+
+        <!-- Cabeçalho -->
+        <div class="modal-header">
+          <h5 class="modal-title">Login</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+
+        <!-- Corpo -->
+        <div class="modal-body">
+          <form>
+            <div class="mb-3">
+              <label>Email</label>
+              <input type="email" class="form-control" placeholder="Digite seu email">
+            </div>
+
+            <div class="mb-3">
+              <label>Senha</label>
+              <input type="password" class="form-control" placeholder="Digite sua senha">
+            </div>
+
+            <button type="submit" class="btn btn-primary w-100 mb-2">Entrar</button>
+          </form>
+        </div>
+
+        <!-- Rodapé -->
+        <div class="modal-footer">
+          <span>Não tem conta?</span>
+          <button class="btn btn-success">Registrar</button>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!--Campo dos cadastros -->
+  <div class="container mt-5">
+
+    <!--Botao de cadastro-->
+    <div class="d-flex justify-content-between mb-3">
+      <h2>Clientes</h2>
+      <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#clienteModal">
+        Cadastrar Cliente
+      </button>
+    </div>
+
+    <!-- tabela -->
+    <table class="table table-dark table-striped">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Nome</th>
+          <th>Email</th>
+          <th>UF</th>
+        </tr>
+      </thead>
+      <tbody id="tabelaClientes"></tbody>
+    </table>
+
+  </div>
+
+
+      <!-- Modal do Cadastro -->
+
+  <div class="modal fade" id="clienteModal">
+    <div class="modal-dialog">
+      <div class="modal-content">
+
+        <div class="modal-header">
+          <h5 class="modal-title">Cadastrar Cliente</h5>
+          <button class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+
+        <div class="modal-body">
+          <form id="formCliente">
+            <input type="hidden" id="clienteId">
+
+            <div class="mb-3">
+              <label>Nome</label>
+              <input type="text" id="nome" class="form-control" required>
+            </div>
+
+            <div class="mb-3">
+              <label>Email</label>
+              <input type="email" id="email" class="form-control" required>
+            </div>
+            
+            <!-- UF -->
+            <div class="mb-3">
+                <label for="uf" class="form-label">Estado (UF)</label>
+  
+                <select id="uf" class="form-select" required>
+                  <option value="">Selecione um estado</option>
+
+                  <option value="AC">Acre</option>
+                  <option value="AL">Alagoas</option>
+                  <option value="AP">Amapá</option>
+                  <option value="AM">Amazonas</option>
+                  <option value="BA">Bahia</option>
+                  <option value="CE">Ceará</option>
+                  <option value="DF">Distrito Federal</option>
+                  <option value="ES">Espírito Santo</option>
+                  <option value="GO">Goiás</option>
+                  <option value="MA">Maranhão</option>
+                  <option value="MT">Mato Grosso</option>
+                  <option value="MS">Mato Grosso do Sul</option>
+                  <option value="MG">Minas Gerais</option>
+                  <option value="PA">Pará</option>
+                  <option value="PB">Paraíba</option>
+                  <option value="PR">Paraná</option>
+                  <option value="PE">Pernambuco</option>
+                  <option value="PI">Piauí</option>
+                  <option value="RJ">Rio de Janeiro</option>
+                  <option value="RN">Rio Grande do Norte</option>
+                  <option value="RS">Rio Grande do Sul</option>
+                  <option value="RO">Rondônia</option>
+                  <option value="RR">Roraima</option>
+                  <option value="SC">Santa Catarina</option>
+                  <option value="SP">São Paulo</option>
+                  <option value="SE">Sergipe</option>
+                  <option value="TO">Tocantins</option>
+
+                </select required>
+            </div>
+
+            <button class="btn btn-success w-100">Salvar</button>
+          </form>
+        </div>
+
+      </div>
+    </div>
+  </div>
+        
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
 </body>
