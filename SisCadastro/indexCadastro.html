@@ -120,9 +120,12 @@
           <th>Nome</th>
           <th>Email</th>
           <th>UF</th>
+          <th>Ações</th>
         </tr>
       </thead>
-      <tbody id="tabelaClientes"></tbody>
+      <tbody id="tabelaClientes">
+        <!--JavaScript-->
+      </tbody>
     </table>
 
   </div>
@@ -191,7 +194,7 @@
                 </select required>
             </div>
 
-            <button class="btn btn-success w-100" onclick="SalvarCadastro()">Salvar</button>
+            <button type="submit" class="btn btn-success w-100">Salvar</button>
           </form>
         </div>
 
@@ -206,33 +209,59 @@
 <script>
   let clientes = [];
   let idAtual = 1;
-  const tabela = $("tabelaClientes");
-  const form = $("formCliente");
+  const tabela = $("#tabelaClientes");
+  const form = $("#formCliente");
 
+    $("#formCliente").on("submit", function(e){
+      e.preventDefault();
+      SalvarCadastro();
+    });
     function SalvarCadastro(){
-      const idCliente = $("clienteId").val();
+      const idCliente = $("#clienteId").val();
       const nomeCliente  = $("#nome").val();
       const emailCliente  = $("#email").val();
-      const ufCliente  = $("#UF").val();
+      const ufCliente  = $("#uf").val();
 
       if (idCliente){
         //editar
-        const cliente = clientes.find(c => c.id == id)
+        const cliente = clientes.find(c => c.id == idCliente);
         //add a nova informação
         cliente.nome = nomeCliente 
-        cliente.email = emailCliente 
+        cliente.email = emailCliente
         cliente.uf = ufCliente
       }else{
         //adiciona o cliente no array
         clientes.push({
-          idCliente: idAtual++,
-          nomeCliente,
-          emailCliente,
-          ufCliente
+          id: idAtual++,
+          nome: nomeCliente,
+          email: emailCliente,
+          uf: ufCliente
         });
-        alert(JSON.stringify(clientes))
       }
+      AtualizaTabela();
+      //alert(JSON.stringify(clientes));
+      $("#clienteId").val("");
     };
+
+     function AtualizaTabela(){
+      tabela.html(""); // LIMPA A TABELA
+      clientes.forEach(cliente=> {
+        tabela.append (`
+        <tr>
+          <td>${cliente.id}</td>
+          <td>${cliente.nome}</td>
+          <td>${cliente.email}</td>
+          <td>${cliente.uf}</td>
+
+          <td>
+            <button class="btn btn-warning btn-sm" onclick="editar(${cliente.id})">Editar</button>
+            <button class="btn btn-danger btn-sm" onclick="deletar(${cliente.id})">Remover</button>  
+          </td>  
+        </tr>
+      `);
+      });
+    }
+    
 </script>
   
 
