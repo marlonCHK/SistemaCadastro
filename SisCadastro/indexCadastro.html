@@ -210,14 +210,15 @@
   let clientes = [];
   let idAtual = 1;
   const tabela = $("#tabelaClientes");
-  const form = $("#formCliente");
 
     $("#formCliente").on("submit", function(e){
       e.preventDefault();
       SalvarCadastro();
     });
-    function SalvarCadastro(){
-      const idCliente = $("#clienteId").val();
+
+    function SalvarCadastro()
+    {
+      const idCliente = Number($("#clienteId").val());
       const nomeCliente  = $("#nome").val();
       const emailCliente  = $("#email").val();
       const ufCliente  = $("#uf").val();
@@ -239,11 +240,14 @@
         });
       }
       AtualizaTabela();
-      //alert(JSON.stringify(clientes));
+      $("#formCliente").trigger("reset");
+      const modal = bootstrap.Modal.getOrCreateInstance($("#clienteModal")[0]);
+      modal.hide();
       $("#clienteId").val("");
-    };
+    }
 
-     function AtualizaTabela(){
+    function AtualizaTabela()
+    {
       tabela.html(""); // LIMPA A TABELA
       clientes.forEach(cliente=> {
         tabela.append (`
@@ -260,6 +264,24 @@
         </tr>
       `);
       });
+    }
+
+    function editar(id)
+    {
+      const cliente = clientes.find(c => c.id === id);
+      $("#clienteId").val(cliente.id);
+      $("#nome").val(cliente.nome);
+      $("#email").val(cliente.email);
+      $("#uf").val(cliente.uf);
+      
+      const modal = bootstrap.Modal.getOrCreateInstance($("#clienteModal")[0]);
+      modal.show();
+    }
+
+    function deletar(id)
+    {
+      clientes = clientes.filter(c=> c.id !== id);
+      AtualizaTabela();
     }
     
 </script>
