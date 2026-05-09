@@ -9,6 +9,7 @@ $("#formCliente").on("submit", function (e) {
 
 function SalvarCadastro() {
     const idCliente = Number($("#clienteId").val());
+    const documentoCliente = Number($("#documento").val());
     const nomeCliente = $("#nome").val();
     const emailCliente = $("#email").val();
     const ufCliente = $("#uf").val();
@@ -17,6 +18,7 @@ function SalvarCadastro() {
         //editar
         const cliente = clientes.find(c => c.id == idCliente);
         //add a nova informação
+        cliente.documento = documentoCliente
         cliente.nome = nomeCliente
         cliente.email = emailCliente
         cliente.uf = ufCliente
@@ -24,6 +26,7 @@ function SalvarCadastro() {
         //adiciona o cliente no array
         clientes.push({
             id: idAtual++,
+            documento: documentoCliente,
             nome: nomeCliente,
             email: emailCliente,
             uf: ufCliente
@@ -41,6 +44,7 @@ function AtualizaTabela() {
         tabela.append(`
         <tr>
             <td>${cliente.id}</td>
+            <td>${cliente.documento}</td>
             <td>${cliente.nome}</td>
             <td>${cliente.email}</td>
             <td>${cliente.uf}</td>
@@ -57,6 +61,7 @@ function AtualizaTabela() {
 function editar(id) {
     const cliente = clientes.find(c => c.id === id);
     $("#clienteId").val(cliente.id);
+    $("#documento").val(cliente.documento);
     $("#nome").val(cliente.nome);
     $("#email").val(cliente.email);
     $("#uf").val(cliente.uf);

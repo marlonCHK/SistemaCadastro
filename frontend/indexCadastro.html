@@ -117,6 +117,7 @@
             <thead>
                 <tr>
                     <th>ID</th>
+                    <th>Documento</th>
                     <th>Nome</th>
                     <th>Email</th>
                     <th>UF</th>
@@ -145,6 +146,11 @@
                 <div class="modal-body">
                     <form id="formCliente">
                         <input type="hidden" id="clienteId">
+                        
+                         <div class="mb-3">
+                            <label>Documento</label>
+                            <input type="text" id="documento" class="form-control" required>
+                        </div>
 
                         <div class="mb-3">
                             <label>Nome</label>
