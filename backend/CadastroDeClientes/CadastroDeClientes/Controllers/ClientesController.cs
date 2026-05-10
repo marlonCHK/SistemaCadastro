@@ -8,13 +8,13 @@ namespace CadastroDeClientes.Controllers
     public class ClientesController : ControllerBase
     {
         [HttpPost("Salvar")]
-        public IActionResult Salvar([FromBody] Clientes cliente )
+        public IActionResult Salvar([FromBody] Cliente cliente )
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
-            return Ok("cliente");
+            return Ok(cliente);
         }
     }
 }

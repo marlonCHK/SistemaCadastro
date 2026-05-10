@@ -24,12 +24,28 @@ function SalvarCadastro() {
         cliente.uf = ufCliente
     } else {
         //adiciona o cliente no array
-        clientes.push({
+        const novoCliente = {
             id: idAtual++,
             documento: documentoCliente,
             nome: nomeCliente,
             email: emailCliente,
             uf: ufCliente
+        };
+        clientes.push(novoCliente);
+
+        $.ajax({
+            type:"POST",
+            url:"https://localhost:44317/api/Clientes/Salvar",
+            data:JSON.stringify(novoCliente),
+            contentType: "application/json; charset=utf-8",
+            dataType:"json",
+            success: function(msg){
+                alert('Sucesso');
+                console.log(msg)
+            },
+            error: function(msg){
+                alert('erro');
+            }
         });
     }
     AtualizaTabela();
