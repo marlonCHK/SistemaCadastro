@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using CadastroDeClientes.Models;
 
 namespace CadastroDeClientes.Controllers
 {
@@ -6,10 +7,14 @@ namespace CadastroDeClientes.Controllers
     [ApiController]
     public class ClientesController : ControllerBase
     {
-        [HttpGet]
-        public IActionResult Listar()
+        [HttpPost("Salvar")]
+        public IActionResult Salvar([FromBody] Clientes cliente )
         {
-            return Ok("API funcionando");
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+            return Ok("cliente");
         }
     }
 }
