@@ -1,0 +1,23 @@
+[
+  {
+    "id": 1,
+    "documento": 1454010320,
+    "nome": "joana",
+    "email": "jo@gmail.com",
+    "uf": "PA"
+  },
+  {
+    "id": 2,
+    "documento": 8931332,
+    "nome": "louro",
+    "email": "louro@email.com",
+    "uf": "MT"
+  },
+  {
+    "id": 1,
+    "documento": 35454223,
+    "nome": "ronaldo",
+    "email": "rona@email.com",
+    "uf": "BA"
+  }
+]
