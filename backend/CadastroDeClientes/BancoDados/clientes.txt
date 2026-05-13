@@ -1,16 +1,1 @@
-[
-  {
-    "id": 2,
-    "documento": 12345,
-    "nome": "mar",
-    "email": "lon@email.com",
-    "uf": "MT"
-  },
-  {
-    "id": 2,
-    "documento": 8931332,
-    "nome": "george",
-    "email": "geo@gmail.com",
-    "uf": "MA"
-  }
-]
+[]

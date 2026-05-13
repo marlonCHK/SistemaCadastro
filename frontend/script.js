@@ -1,5 +1,4 @@
 let clientes = [];
-let idAtual = 1;
 const tabela = $("#tabelaClientes");
 
 //chama listar no inicio pra atualizar a tela
@@ -12,24 +11,27 @@ $("#formCliente").on("submit", function (e) {
 });
 
 function SalvarCadastro() {
-    const idCliente = Number($("#clienteId").val());
     const documentoCliente = Number($("#documento").val());
     const nomeCliente = $("#nome").val();
     const emailCliente = $("#email").val();
     const ufCliente = $("#uf").val();
+    //Verifica se documento ja existe
+    const ExisteCliente = clientes.some(clientes =>
+        clientes.documento === documentoCliente
+    )
 
-    if (idCliente) {
+    if (ExisteCliente) {
         //editar
-        const cliente = clientes.find(c => c.id == idCliente);
+        const cliente = clientes.find(c => c.documento == documentoCliente);
+        alert('Esse documento já está cadastrado.')
         //add a nova informação
-        cliente.documento = documentoCliente
+        /*cliente.documento = documentoCliente
         cliente.nome = nomeCliente
         cliente.email = emailCliente
-        cliente.uf = ufCliente
+        cliente.uf = ufCliente*/
     } else {
         //adiciona o cliente no array
         const novoCliente = {
-            id: idAtual+= 1,
             documento: documentoCliente,
             nome: nomeCliente,
             email: emailCliente,
@@ -63,15 +65,14 @@ function AtualizaTabela() {
     clientes.forEach(cliente => {
         tabela.append(`
         <tr>
-            <td>${cliente.id}</td>
             <td>${cliente.documento}</td>
             <td>${cliente.nome}</td>
             <td>${cliente.email}</td>
             <td>${cliente.uf}</td>
 
             <td>
-            <button class="btn btn-warning btn-sm" onclick="editar(${cliente.id})">Editar</button>
-            <button class="btn btn-danger btn-sm" onclick="deletar(${cliente.id})">Remover</button>
+            <button class="btn btn-warning btn-sm" onclick="editar(${cliente.documento})">Editar</button>
+            <button class="btn btn-danger btn-sm" onclick="deletar(${cliente.documento})">Remover</button>
             </td>
         </tr>
         `);
@@ -90,7 +91,6 @@ function Listar(){
                 alert('Sucesso');
                 OBJ.forEach(clienteJson =>{
                     const clientesAtualiza = {
-                        id: clienteJson.id,
                         documento: clienteJson.documento,
                         nome: clienteJson.nome,
                         email: clienteJson.email,
@@ -107,9 +107,8 @@ function Listar(){
         });
 }
 
-function editar(id) {
-    const cliente = clientes.find(c => c.id === id);
-    $("#clienteId").val(cliente.id);
+function editar(documento) {
+    const cliente = clientes.find(c => c.documento === documento);
     $("#documento").val(cliente.documento);
     $("#nome").val(cliente.nome);
     $("#email").val(cliente.email);
@@ -119,7 +118,7 @@ function editar(id) {
     modal.show();
 }
 
-function deletar(id) {
-    clientes = clientes.filter(c => c.id !== id);
+function deletar(documento) {
+    clientes = clientes.filter(c => c.documento !== documento);
     AtualizaTabela();
 }
