@@ -1,4 +1,5 @@
 ﻿using CadastroDeClientes.Models;
+using System.Security.Cryptography.X509Certificates;
 using System.Text.Json;
 
 namespace CadastroDeClientes.Repositories
@@ -43,6 +44,13 @@ namespace CadastroDeClientes.Repositories
                     });
             //salva no banco .txt
             File.WriteAllText(CaminhoArquivo, ClienteNovoJson);
+        }
+        
+        public List<Cliente> Listar()
+        {
+            var cliente = File.ReadAllText(CaminhoArquivo);
+            List<Cliente> ListaClientes = JsonSerializer.Deserialize<List<Cliente>>(cliente);
+            return ListaClientes.OrderByDescending(c => c.nome).ToList();
         }
     }
 }

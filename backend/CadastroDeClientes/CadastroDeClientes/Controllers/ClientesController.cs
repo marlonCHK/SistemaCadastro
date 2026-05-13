@@ -34,5 +34,24 @@ namespace CadastroDeClientes.Controllers
             return null;
            
         }
+
+        [HttpGet("Listar")]
+        public IActionResult Listar()
+        {
+            List<Cliente> ClientesLista = null;
+ 
+            try
+            {
+                ClientesLista = _repository.Listar();
+                
+                
+            }
+            catch(Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+            return Ok(ClientesLista);
+           
+        }
     }
 }

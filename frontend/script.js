@@ -2,6 +2,10 @@ let clientes = [];
 let idAtual = 1;
 const tabela = $("#tabelaClientes");
 
+//chama listar no inicio pra atualizar a tela
+alert('vai chamar');
+Listar();
+
 $("#formCliente").on("submit", function (e) {
     e.preventDefault();
     SalvarCadastro();
@@ -25,7 +29,7 @@ function SalvarCadastro() {
     } else {
         //adiciona o cliente no array
         const novoCliente = {
-            id: idAtual++,
+            id: idAtual+= 1,
             documento: documentoCliente,
             nome: nomeCliente,
             email: emailCliente,
@@ -48,7 +52,7 @@ function SalvarCadastro() {
             }
         });
     }
-    AtualizaTabela();
+    //AtualizaTabela();
     $("#formCliente").trigger("reset");
     const modal = bootstrap.Modal.getOrCreateInstance($("#clienteModal")[0]);
     modal.hide();
@@ -72,6 +76,35 @@ function AtualizaTabela() {
         </tr>
         `);
     });
+}
+
+function Listar(){
+    alert('entrou ?');
+    $.ajax({
+            type:"GET",
+            url:"https://localhost:44317/api/Clientes/Listar",
+            contentType: "application/json; charset=utf-8",
+            dataType:"json",
+            success: function(OBJ){
+
+                alert('Sucesso');
+                OBJ.forEach(clienteJson =>{
+                    const clientesAtualiza = {
+                        id: clienteJson.id,
+                        documento: clienteJson.documento,
+                        nome: clienteJson.nome,
+                        email: clienteJson.email,
+                        uf: clienteJson.uf
+                    };
+                    clientes.push(clientesAtualiza);
+                    AtualizaTabela()
+
+                })
+            },
+            error: function(OBJ){
+                alert('erro');
+            }
+        });
 }
 
 function editar(id) {
