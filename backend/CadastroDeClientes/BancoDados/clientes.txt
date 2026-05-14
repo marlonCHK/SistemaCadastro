@@ -1,1 +1,14 @@
-[]
+[
+  {
+    "documento": 12345,
+    "nome": "mar",
+    "email": "lon@email.com",
+    "uf": "MA"
+  },
+  {
+    "documento": 90343,
+    "nome": "testandouf",
+    "email": "teste@email.com",
+    "uf": "DF"
+  }
+]

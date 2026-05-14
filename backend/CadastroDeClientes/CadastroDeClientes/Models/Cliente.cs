@@ -4,8 +4,6 @@ namespace CadastroDeClientes.Models
 {
     public class Cliente
     {
-        public int id { get; set; }
-
         [Required]
         public int documento { get; set; }
 

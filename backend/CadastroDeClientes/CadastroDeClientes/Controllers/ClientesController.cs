@@ -53,5 +53,23 @@ namespace CadastroDeClientes.Controllers
             return Ok(ClientesLista);
            
         }
+
+        [HttpDelete("Deletar")]
+        public IActionResult Deletar(string documento)
+        {
+
+            try
+            {
+                _repository.Deletar(documento);
+
+
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+            return NoContent();
+
+        }
     }
 }

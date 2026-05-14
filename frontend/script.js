@@ -2,7 +2,6 @@ let clientes = [];
 const tabela = $("#tabelaClientes");
 
 //chama listar no inicio pra atualizar a tela
-alert('vai chamar');
 Listar();
 
 $("#formCliente").on("submit", function (e) {
@@ -64,7 +63,8 @@ function AtualizaTabela() {
     tabela.html(""); // LIMPA A TABELA
     clientes.forEach(cliente => {
         tabela.append(`
-        <tr>
+        <tr id="Linha${cliente.documento}">
+
             <td>${cliente.documento}</td>
             <td>${cliente.nome}</td>
             <td>${cliente.email}</td>
@@ -80,7 +80,6 @@ function AtualizaTabela() {
 }
 
 function Listar(){
-    alert('entrou ?');
     $.ajax({
             type:"GET",
             url:"https://localhost:44317/api/Clientes/Listar",
@@ -120,5 +119,22 @@ function editar(documento) {
 
 function deletar(documento) {
     clientes = clientes.filter(c => c.documento !== documento);
-    AtualizaTabela();
+    $.ajax({
+        type: "DELETE",
+        url:
+        "https://localhost:44317/api/Clientes/Deletar?Documento=" + documento,
+        contentType: "application/json; charset=utf-8",
+        dataType: "json",
+        success: function (OBJ)
+        {
+            alert('Cliente removido');
+            $('#Linha' + documento).remove();
+        },
+        error: function (OBJ)
+        {
+            alert('error');
+        }
+
+    });
+
 }

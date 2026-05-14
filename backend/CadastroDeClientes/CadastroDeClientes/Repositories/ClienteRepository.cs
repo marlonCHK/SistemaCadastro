@@ -1,4 +1,5 @@
-﻿using CadastroDeClientes.Models;
+﻿using CadastroDeClientes.Controllers;
+using CadastroDeClientes.Models;
 using System.Security.Cryptography.X509Certificates;
 using System.Text.Json;
 
@@ -52,5 +53,30 @@ namespace CadastroDeClientes.Repositories
             List<Cliente> ListaClientes = JsonSerializer.Deserialize<List<Cliente>>(cliente);
             return ListaClientes.OrderByDescending(c => c.nome).ToList();
         }
+
+        public void Deletar(string documento)
+        {
+            //retorna o banco
+            var clientes = Listar();
+
+            //procura cliente para remover
+            var clienteRemover = clientes.FirstOrDefault(c => 
+            c.documento.ToString() == documento);
+
+            if (clienteRemover != null)
+            {
+                clientes.Remove(clienteRemover);
+            }
+            //salva o banco
+            string ClienteNovoJson =
+                JsonSerializer.Serialize(clientes,
+                    new JsonSerializerOptions
+                    {
+                        WriteIndented = true
+                    });
+            File.WriteAllText(CaminhoArquivo, ClienteNovoJson);
+
+        }
+
     }
 }
