@@ -1,5 +1,6 @@
 let clientes = [];
 const tabela = $("#tabelaClientes");
+let Editando = false;
 
 //chama listar no inicio pra atualizar a tela
 Listar();
@@ -18,26 +19,36 @@ function SalvarCadastro() {
     const ExisteCliente = clientes.some(clientes =>
         clientes.documento === documentoCliente
     )
-
-    if (ExisteCliente) {
-        //editar
-        const cliente = clientes.find(c => c.documento == documentoCliente);
+    //validação de update ou documento repetido
+    if (ExisteCliente && !Editando) {
         alert('Esse documento já está cadastrado.')
-        //add a nova informação
-        /*cliente.documento = documentoCliente
-        cliente.nome = nomeCliente
-        cliente.email = emailCliente
-        cliente.uf = ufCliente*/
-    } else {
-        //adiciona o cliente no array
-        const novoCliente = {
-            documento: documentoCliente,
-            nome: nomeCliente,
-            email: emailCliente,
-            uf: ufCliente
-        };
-        clientes.push(novoCliente);
+    }
 
+    //adiciona o cliente no array
+    const novoCliente = {
+        documento: documentoCliente,
+        nome: nomeCliente,
+        email: emailCliente,
+        uf: ufCliente
+    };
+
+    if(Editando){
+        $.ajax({
+            type:"PUT",
+            url:"https://localhost:44317/api/Clientes/Atualizar",
+            data:JSON.stringify(novoCliente),
+            contentType: "application/json; charset=utf-8",
+            dataType:"json",
+            success: function(){
+                alert('Sucesso');
+                clientes.push(novoCliente);
+            },
+            error: function(){
+                alert('erro');
+            }
+        });
+    }else {
+        clientes.push(novoCliente);
         $.ajax({
             type:"POST",
             url:"https://localhost:44317/api/Clientes/Salvar",
@@ -106,15 +117,37 @@ function Listar(){
         });
 }
 
-function editar(documento) {
-    const cliente = clientes.find(c => c.documento === documento);
-    $("#documento").val(cliente.documento);
-    $("#nome").val(cliente.nome);
-    $("#email").val(cliente.email);
-    $("#uf").val(cliente.uf);
+function editar(documento){
+    const clienteAtualizar = clientes.find(c => c.documento === documento)
 
-    const modal = bootstrap.Modal.getOrCreateInstance($("#clienteModal")[0]);
-    modal.show();
+    if(clienteAtualizar){
+        $("#documento").val(clienteAtualizar.documento);
+        $("#nome").val(clienteAtualizar.nome);
+        $("#email").val(clienteAtualizar.email);
+        $("#uf").val(clienteAtualizar.uf);
+
+        Editando = true;
+        const modal = bootstrap.Modal.getOrCreateInstance($("#clienteModal")[0]);
+        modal.show();
+    }
+}
+
+function Buscar(documento) {
+    $.ajax({
+            type:"GET",
+            url:"https://localhost:44317/api/Clientes/Atualizar?documento="+documento,
+            contentType: "application/json; charset=utf-8",
+            dataType:"json",
+            success: function(OBJ){
+                alert('Sucesso');
+
+            },
+            error: function(OBJ){
+                alert('erro');
+            }
+        });
+
+    
 }
 
 function deletar(documento) {
@@ -122,7 +155,7 @@ function deletar(documento) {
     $.ajax({
         type: "DELETE",
         url:
-        "https://localhost:44317/api/Clientes/Deletar?Documento=" + documento,
+        "https://localhost:44317/api/Clientes/Deletar?documento=" + documento,
         contentType: "application/json; charset=utf-8",
         dataType: "json",
         success: function (OBJ)

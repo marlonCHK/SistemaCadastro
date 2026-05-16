@@ -28,11 +28,17 @@ namespace CadastroDeClientes.Repositories
 
         public void Salvar(Cliente cliente)
         {
-            //Lê txt dos clientes
-            string ClienteJson = File.ReadAllText(CaminhoArquivo);
-            //converte
-            List<Cliente> clientes = JsonSerializer.Deserialize<List<Cliente>>(ClienteJson);
+            //retorna banco atualizado em lista
+            List<Cliente> clientes = Listar();
 
+            //procura se documento repetido para atualizar/deletar
+            var ClienteExiste = clientes.Where(c => c.documento == cliente.documento).FirstOrDefault();
+
+            if (ClienteExiste != null) 
+            {
+                Deletar(cliente.documento.ToString());
+                clientes = Listar();
+            }
             //adiciona o cliente que foi passado
             clientes.Add(cliente);
 
@@ -77,6 +83,30 @@ namespace CadastroDeClientes.Repositories
             File.WriteAllText(CaminhoArquivo, ClienteNovoJson);
 
         }
+
+        public void Atualizar(Cliente ClienteAtualizar)
+        {
+            var Clientes = Listar();
+            var ClienteAntigo = Clientes.FirstOrDefault(c =>
+            c.documento == ClienteAtualizar.documento);
+            if (ClienteAntigo != null)
+            {
+                Salvar(ClienteAtualizar);
+            }
+        }
+
+        /*public Cliente Buscar(string documento)
+        {
+            
+            //retorna o banco
+            var clientes = Listar();
+            //procura o cliente para atualizar
+            var clienteBusca = clientes.FirstOrDefault(c =>
+            c.documento.ToString() == documento);
+            return clienteBusca;
+            
+
+        }*/
 
     }
 }

@@ -29,9 +29,9 @@ namespace CadastroDeClientes.Controllers
             }
             catch(Exception ex)
             {
-                
+                return BadRequest(ex.Message);
             }
-            return null;
+            
            
         }
 
@@ -71,5 +71,42 @@ namespace CadastroDeClientes.Controllers
             return NoContent();
 
         }
+
+        [HttpPut("Atualizar")]
+        public IActionResult Atualizar([FromBody] Cliente clienteAtualizado)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+            try
+            {
+                _repository.Atualizar(clienteAtualizado);
+                return NoContent();
+
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+
+        }
+
+        /*[HttpGet("Buscar")]
+        public IActionResult Atualizar(string documento)
+        {
+            try
+            {
+                var ClienteAtualizar = _repository.Buscar(documento);
+
+                return Ok(ClienteAtualizar);
+
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+
+        }*/
     }
 }
