@@ -64,7 +64,6 @@ function SalvarCadastro() {
             }
         });
     }
-    //AtualizaTabela();
     $("#formCliente").trigger("reset");
     const modal = bootstrap.Modal.getOrCreateInstance($("#clienteModal")[0]);
     modal.hide();
@@ -82,8 +81,8 @@ function AtualizaTabela() {
             <td>${cliente.uf}</td>
 
             <td>
-            <button class="btn btn-warning btn-sm" onclick="editar(${cliente.documento})">Editar</button>
-            <button class="btn btn-danger btn-sm" onclick="deletar(${cliente.documento})">Remover</button>
+            <button class="btn btn-warning btn-sm" onclick="Editar(${cliente.documento})">Editar</button>
+            <button class="btn btn-danger btn-sm" onclick="Deletar(${cliente.documento})">Remover</button>
             </td>
         </tr>
         `);
@@ -117,9 +116,10 @@ function Listar(){
         });
 }
 
-function editar(documento){
+function Editar(documento){
     const clienteAtualizar = clientes.find(c => c.documento === documento)
 
+    //Abre modal com dados preenchidos do cliente
     if(clienteAtualizar){
         $("#documento").val(clienteAtualizar.documento);
         $("#nome").val(clienteAtualizar.nome);
@@ -129,9 +129,11 @@ function editar(documento){
         Editando = true;
         const modal = bootstrap.Modal.getOrCreateInstance($("#clienteModal")[0]);
         modal.show();
+        //Após as alterações, chama função SalvarCadastro() via modal
     }
 }
 
+/*
 function Buscar(documento) {
     $.ajax({
             type:"GET",
@@ -146,12 +148,14 @@ function Buscar(documento) {
                 alert('erro');
             }
         });
-
-    
+ 
 }
+*/
 
-function deletar(documento) {
+function Deletar(documento) {
+    //atualiza lista de clientes 
     clientes = clientes.filter(c => c.documento !== documento);
+    
     $.ajax({
         type: "DELETE",
         url:
