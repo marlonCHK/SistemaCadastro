@@ -1,4 +1,13 @@
+using CadastroDeClientes.Data;
+using Microsoft.EntityFrameworkCore;
+
 var builder = WebApplication.CreateBuilder(args);
+
+//Instância do ApplicationDbContext
+builder.Services.AddDbContext<ApplicationDbContext>(
+    options =>
+        options.UseSqlServer(
+            builder.Configuration.GetConnectionString("ConnString")));
 
 // Add services to the container.
 builder.Services.AddControllers();
