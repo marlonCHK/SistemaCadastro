@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using CadastroDeClientes.Models;
 using CadastroDeClientes.Repositories;
+using CadastroDeClientes.Data;
 
 namespace CadastroDeClientes.Controllers
 {
@@ -8,10 +9,11 @@ namespace CadastroDeClientes.Controllers
     [ApiController]
     public class ClientesController : ControllerBase
     {
-        private readonly ClienteRepository _repository;
-        public ClientesController()
+        private readonly ApplicationDbContext _context;
+
+        public ClientesController(ApplicationDbContext context)
         {
-            _repository = new ClienteRepository();
+            _context = context;
         }
 
         [HttpPost("Salvar")]
@@ -23,16 +25,16 @@ namespace CadastroDeClientes.Controllers
             }
             try
             {
-                _repository.Salvar(cadastro);
-                return Ok(cadastro);
+                _context.Clientes.Add(cadastro);
+                _context.SaveChanges();
                 
             }
             catch(Exception ex)
             {
                 return BadRequest(ex.Message);
             }
-            
-           
+            return Ok();
+        
         }
 
         [HttpGet("Listar")]
@@ -42,7 +44,7 @@ namespace CadastroDeClientes.Controllers
  
             try
             {
-                ClientesLista = _repository.Listar();
+                //ClientesLista = _repository.Listar();
                 
                 
             }
@@ -60,7 +62,7 @@ namespace CadastroDeClientes.Controllers
 
             try
             {
-                _repository.Deletar(documento);
+               // _repository.Deletar(documento);
 
 
             }
@@ -81,7 +83,7 @@ namespace CadastroDeClientes.Controllers
             }
             try
             {
-                _repository.Atualizar(clienteAtualizado);
+               // _repository.Atualizar(clienteAtualizado);
                 return NoContent();
 
             }

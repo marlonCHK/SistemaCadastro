@@ -7,57 +7,17 @@ namespace CadastroDeClientes.Repositories
 {
     public class ClienteRepository
     {
-        private readonly string PastaBanco =
-            Path.Combine(Directory.GetParent(
-            Directory.GetCurrentDirectory()).FullName, "BancoDados");
-
-        private readonly string CaminhoArquivo;
-        public ClienteRepository()
-        {
-            //Cria pastaBanco se nao existir
-            Directory.CreateDirectory(PastaBanco);
-
-            CaminhoArquivo = Path.Combine(PastaBanco, "clientes.txt");
-
-            //Cria o txt se não existir
-            if (!File.Exists(CaminhoArquivo))
-            {
-                File.WriteAllText(CaminhoArquivo, "[]");
-            }
-        }
-
         public void Salvar(Cliente cliente)
         {
-            //retorna banco atualizado em lista
-            List<Cliente> clientes = Listar();
-
-            //procura se documento repetido para atualizar/deletar
-            var ClienteExiste = clientes.Where(c => c.documento == cliente.documento).FirstOrDefault();
-
-            if (ClienteExiste != null) 
-            {
-                Deletar(cliente.documento.ToString());
-                clientes = Listar();
-            }
-            //adiciona o cliente que foi passado
-            clientes.Add(cliente);
-
-            //converte para json
-            string ClienteNovoJson =
-                JsonSerializer.Serialize(clientes,
-                    new JsonSerializerOptions
-                    {
-                        WriteIndented = true
-                    });
-            //salva no banco .txt
-            File.WriteAllText(CaminhoArquivo, ClienteNovoJson);
+            
         }
         
         public List<Cliente> Listar()
         {
-            var cliente = File.ReadAllText(CaminhoArquivo);
-            List<Cliente> ListaClientes = JsonSerializer.Deserialize<List<Cliente>>(cliente);
-            return ListaClientes.OrderByDescending(c => c.nome).ToList();
+            //var cliente = File.ReadAllText(CaminhoArquivo);
+            //List<Cliente> ListaClientes = JsonSerializer.Deserialize<List<Cliente>>(cliente);
+            //return ListaClientes.OrderByDescending(c => c.nome).ToList();
+            return null;
         }
 
         public void Deletar(string documento)
@@ -80,7 +40,7 @@ namespace CadastroDeClientes.Repositories
                     {
                         WriteIndented = true
                     });
-            File.WriteAllText(CaminhoArquivo, ClienteNovoJson);
+            //File.WriteAllText(CaminhoArquivo, ClienteNovoJson);
 
         }
 
